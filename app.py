@@ -3,16 +3,20 @@ import json
 import requests
 import datetime
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
 import google.genai as genai
 from google.genai import types
 from twilio.twiml.messaging_response import MessagingResponse
 from invoice_gen import generate_pdf
 from db_manager import (
     get_user, create_user, update_user, set_user_state,
-    add_conversation_entry, is_onboarding_complete
+    add_conversation_entry
 )
 
 app = Flask(__name__)
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure Google Gemini API with new package
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
@@ -20,8 +24,8 @@ if GOOGLE_API_KEY:
     client = genai.Client(api_key=GOOGLE_API_KEY)
 
 # Twilio credentials for media downloads
-TWILIO_ACCOUNT_SID = "ACc4e5d0d95c473b3bf0c28e1b4a83af1c"
-TWILIO_AUTH_TOKEN = "ed0f3cc794912c58d9555a6b0b28e6eb"
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
 
 
 def parse_order(media_url=None, text_body=None, pending_order=None, input_type='text', mime_type=None):

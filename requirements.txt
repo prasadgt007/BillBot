@@ -1,5 +1,6 @@
-flask
-twilio
-google-genai
-reportlab
-requests
+flask==3.1.0
+twilio==9.4.0
+google-generativeai
+reportlab==4.2.5
+requests==2.32.3
+python-dotenv==1.0.0
