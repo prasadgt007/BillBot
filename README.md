@@ -296,7 +296,7 @@ This is a hackathon project! Contributions welcome:
 ### Ideas for Enhancement
 - 🌐 Multi-language invoice support
 - 🖼️ Company logo upload
-- 🗄️ PostgreSQL/MongoDB integration
+- 🗄️ Excel integration
 - 📈 Sales dashboard and analytics
 - 📧 Email invoice delivery
 - 🔄 Integration with accounting software
@@ -318,7 +318,5 @@ This is a hackathon project! Contributions welcome:
 - Inspect `user_data.json` for conversation history
 
 ---
-
-**Built with ❤️ using Google Gemini AI | Powered by Flask & Twilio**
 
 🎥 **[Watch Demo](https://drive.google.com/file/d/1DetR-IfN9p1njNY71FMreT0LXPDIJooS/view?usp=sharing)**
