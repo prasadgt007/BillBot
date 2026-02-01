@@ -30,7 +30,7 @@ TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
 
 def parse_order(media_url=None, text_body=None, pending_order=None, input_type='text', mime_type=None):
     """
-    Parse order information from IMAGE, AUDIO, or TEXT using Google Gemini 1.5 Flash.
+    Parse order information from IMAGE, AUDIO, or TEXT using Google Gemini 2.5 Flash.
     Now with OCR support for handwritten notes and intelligent missing field detection.
     
     Args:
@@ -66,9 +66,9 @@ Extract order information and return a JSON object:
 {
     "status": "complete" or "incomplete",
     "data": {
-        "customer": "customer name or null",
+        "customer": "customer name in ENGLISH ONLY",
         "items": [
-            {"name": "item name", "qty": quantity_or_null, "rate": price_or_null}
+            {"name": "item name in ENGLISH ONLY", "qty": quantity_or_null, "rate": price_or_null}
         ]
     },
     "missing_fields": ["list of missing information"]
@@ -76,7 +76,10 @@ Extract order information and return a JSON object:
 
 Rules:
 - Infer context from messy handwriting using common sense
-- If customer name is in the image, extract it
+- **CRITICAL: Translate ALL Hindi/Marathi text to English. Return ONLY English text, NO Hindi/Marathi characters.**
+- Examples: "राजू" → "Raju", "सेब" → "Apple", "केला" → "Banana"
+- DO NOT include original language in brackets like "राजू (Raju)" - use ONLY "Raju"
+- If customer name is in the image, extract and translate it to English
 - Extract ALL items visible, even if some details are missing
 - For quantities: look for numbers before item names
 - For rates/prices: look for ₹ symbol or "Rs" or numbers after "@" or "per"
@@ -113,8 +116,8 @@ Rules:
     
     try:
         # Use the new google.genai API
-        # Gemini 1.5 Flash is the default and best for this use case
-        model_name = 'gemini-2.5-flash'
+        # Gemini 2.5 Flash is the default and best for this use case
+        model_name = 'gemini-3-flash-preview'
         
         # Prepare context if there's a pending order
         context = ""

@@ -6,6 +6,8 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.pdfgen import canvas
+from reportlab.graphics.barcode import code128
+from reportlab.graphics import renderPDF
 
 
 def generate_pdf(data, filename, company_details=None):
@@ -203,8 +205,21 @@ def generate_pdf(data, filename, company_details=None):
     elements.append(Paragraph("This is a computer generated invoice.", 
                              ParagraphStyle('Footer', parent=normal_style, fontSize=8, textColor=colors.grey)))
     
-    # Build PDF
-    doc.build(elements)
+    # Build PDF with barcode
+    def add_barcode(canvas_obj, doc_obj):
+        """
+        Add barcode to the top-right corner of the PDF
+        """
+        # Extract barcode data from filename (remove .pdf extension)
+        barcode_data = filename.replace('.pdf', '')
+        
+        # Create Code128 barcode
+        barcode = code128.Code128(barcode_data, barWidth=0.8, barHeight=30)
+        
+        # Draw barcode at top-right corner with padding (360, 780)
+        barcode.drawOn(canvas_obj, 360, 780)
+    
+    doc.build(elements, onFirstPage=add_barcode, onLaterPages=add_barcode)
     
     print(f"Invoice generated successfully: {pdf_path}")
     return pdf_path
