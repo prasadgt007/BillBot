@@ -289,10 +289,6 @@ Generated PDFs include:
 
 ---
 
-## 🤝 Contributing
-
-This is a hackathon project! Contributions welcome:
-
 ### Ideas for Enhancement
 - 🌐 Multi-language invoice support
 - 🖼️ Company logo upload
@@ -320,3 +316,7 @@ This is a hackathon project! Contributions welcome:
 ---
 
 🎥 **[Watch Demo](https://drive.google.com/file/d/1DetR-IfN9p1njNY71FMreT0LXPDIJooS/view?usp=sharing)**
+
+---
+
+© 2026 Prasad Takwane. All Rights Reserved.
